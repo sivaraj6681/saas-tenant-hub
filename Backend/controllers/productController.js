@@ -7,7 +7,7 @@ exports.createProduct = async (req, res) => {
 
   try {
     const newProduct = new Product({
-      user: req.user._id,          // ✅ FIXED
+      user: req.user._id,          
       client: clientId,
       name,
       category,
@@ -28,7 +28,7 @@ exports.getProductsByClient = async (req, res) => {
 
   try {
     const products = await Product.find({
-      user: req.user._id,          // ✅ FIXED
+      user: req.user._id,         
       client: clientId
     });
 
@@ -45,7 +45,7 @@ exports.updateProduct = async (req, res) => {
 
   try {
     const product = await Product.findOneAndUpdate(
-      { _id: productId, user: req.user._id },   // ✅ FIXED
+      { _id: productId, user: req.user._id },   
       { name, description, category, price },
       { new: true, runValidators: true }
     );
@@ -64,7 +64,7 @@ exports.deleteProduct = async (req, res) => {
   try {
     const product = await Product.findOneAndDelete({
       _id: productId,
-      user: req.user._id             // ✅ FIXED
+      user: req.user._id             
     });
 
     if (!product) return res.status(404).json({ message: "Product not found" });

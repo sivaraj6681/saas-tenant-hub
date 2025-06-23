@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ['owner', 'viewer'],
-    default: 'viewer' // default if not specified
+    default: 'viewer' 
   }
 }, {
   timestamps: true
