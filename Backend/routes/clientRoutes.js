@@ -10,20 +10,20 @@ const {
 } = require('../controllers/clientController');
 
 const authenticate = require('../middleware/authMiddleware');
-const { isOwner } = require('../middleware/roleMiddleware');
+const { isowner } = require('../middleware/roleMiddleware');
 
 // All routes require authentication
 router.use(authenticate);
 
-// Only Owner can create clients
-router.post('/', isOwner, createClient);
+// Only owner can create clients
+router.post('/', isowner, createClient);
 
 // All authenticated users can view clients
 router.get('/', getClients);
 router.get('/:id', getClientById);
 
-// Only Owner can update or delete
-router.put('/:id', isOwner, updateClient);
-router.delete('/:id', isOwner, deleteClient);
+// Only owner can update or delete
+router.put('/:id', isowner, updateClient);
+router.delete('/:id', isowner, deleteClient);
 
 module.exports = router;

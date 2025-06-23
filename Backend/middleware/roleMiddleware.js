@@ -1,14 +1,14 @@
 // middleware/roleMiddleware.js
 
-// Middleware to check if the user has the "Owner" role
-const isOwner = (req, res, next) => {
+// Middleware to check if the user has the "owner" role
+const isowner = (req, res, next) => {
   if (!req.user || req.user.role !== 'owner') {
-    return res.status(403).json({ message: 'Access denied. Owner only.' });
+    return res.status(403).json({ message: 'Access denied. owner only.' });
   }
   next();
 };
 
-// Middleware to allow multiple roles (e.g., Owner, Admin, Viewer)
+// Middleware to allow multiple roles (e.g., owner, Admin, Viewer)
 const authorizeRoles = (...allowedRoles) => {
   return (req, res, next) => {
     if (!req.user || !allowedRoles.includes(req.user.role)) {
@@ -18,4 +18,4 @@ const authorizeRoles = (...allowedRoles) => {
   };
 };
 
-module.exports = { isOwner, authorizeRoles };
+module.exports = { isowner, authorizeRoles };
