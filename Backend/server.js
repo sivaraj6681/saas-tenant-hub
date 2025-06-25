@@ -14,7 +14,7 @@ const app = express();
 
 // ✅ Allow frontend (React at localhost:3001) and enable credentials
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  origin: ['https://saas-tenant-hub.railway.internal'],
   credentials: true
 }));
 
