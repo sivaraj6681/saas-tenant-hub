@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 export const login = async (email, password) => {
-  const res = await axios.post('http://localhost:5000/api/auth/login', {
+  const res = await axios.post('https://saas-tenant-hub.railway.internal', {
     email,
     password
   });
@@ -10,6 +10,6 @@ export const login = async (email, password) => {
 };
 
 export const register = async (formData) => {
-  const res = await axios.post('http://localhost:5000/api/auth/register', formData);
+  const res = await axios.post('https://saas-tenant-hub.railway.internal', formData);
   return res.data;
 };
