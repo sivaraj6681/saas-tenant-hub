@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { Card, Button, Modal, Form, Row, Col, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
+
 const ClientManagement = () => {
   const [clients, setClients] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -34,7 +37,7 @@ const ClientManagement = () => {
   const fetchClients = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.get('http://localhost:5000/api/clients', {
+      const res = await axios.get(`${API_URL}/api/clients`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setClients(res.data);
@@ -48,11 +51,11 @@ const ClientManagement = () => {
     const token = localStorage.getItem('token');
     try {
       if (editingClientId) {
-        await axios.put(`http://localhost:5000/api/clients/${editingClientId}`, formData, {
+        await axios.put(`${API_URL}/api/clients/${editingClientId}`, formData, {
           headers: { Authorization: `Bearer ${token}` },
         });
       } else {
-        await axios.post('http://localhost:5000/api/clients', formData, {
+         await axios.post(`${API_URL}/api/clients`,  formData, {
           headers: { Authorization: `Bearer ${token}` },
         });
       }
@@ -74,7 +77,7 @@ const ClientManagement = () => {
   const handleDeleteClient = async (clientId) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`http://localhost:5000/api/clients/${clientId}`, {
+      await axios.delete(`${API_URL}/api/clients/${clientId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchClients();
@@ -88,7 +91,7 @@ const ClientManagement = () => {
     setLoadingProducts(true);
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.get(`http://localhost:5000/api/products/client/${client._id}`, {
+      const res = await axios.get(`${API_URL}/api/products/client/${client._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProducts(res.data);
@@ -104,11 +107,11 @@ const ClientManagement = () => {
     const token = localStorage.getItem('token');
     try {
       if (editingProductId) {
-        await axios.put(`http://localhost:5000/api/products/${editingProductId}`, productForm, {
+         await axios.put(`${API_URL}/api/products/${editingProductId}`, productForm, {
           headers: { Authorization: `Bearer ${token}` },
         });
       } else {
-        await axios.post(`http://localhost:5000/api/products/${selectedClient._id}`, productForm, {
+         await axios.post(`${API_URL}/api/products/${selectedClient._id}`, productForm, {
           headers: { Authorization: `Bearer ${token}` },
         });
       }
@@ -128,7 +131,7 @@ const ClientManagement = () => {
   const handleDeleteProduct = async (productId) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`http://localhost:5000/api/products/${productId}`, {
+       await axios.delete(`${API_URL}/api/products/${productId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       handleManageProducts(selectedClient); // refresh

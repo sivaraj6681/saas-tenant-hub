@@ -1,9 +1,12 @@
 // src/components/Dashboard.js
+// src/components/Dashboard.js
 import React, { useEffect, useState } from 'react';
 import { Button, Card, Modal, Form, Row, Col, Spinner, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import axios from 'axios';
 import { Pencil, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 const Dashboard = () => {
   const [clients, setClients] = useState([]);
@@ -38,7 +41,7 @@ const Dashboard = () => {
   const fetchClients = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/clients', {
+      const res = await axios.get(`${API_URL}/api/clients`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setClients(res.data);
@@ -51,7 +54,7 @@ const Dashboard = () => {
     setLoadingProducts(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`http://localhost:5000/api/products/client/${clientId}`, {
+      const res = await axios.get(`${API_URL}/api/products/client/${clientId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProducts(res.data);
@@ -72,11 +75,11 @@ const Dashboard = () => {
     const token = localStorage.getItem('token');
     try {
       if (editingClientId) {
-        await axios.put(`http://localhost:5000/api/clients/${editingClientId}`, formData, {
+        await axios.put(`${API_URL}/api/clients/${editingClientId}`, formData, {
           headers: { Authorization: `Bearer ${token}` },
         });
       } else {
-        await axios.post(`http://localhost:5000/api/clients`, formData, {
+        await axios.post(`${API_URL}/api/clients`, formData, {
           headers: { Authorization: `Bearer ${token}` },
         });
       }
@@ -99,7 +102,7 @@ const Dashboard = () => {
     if (!window.confirm('Are you sure you want to delete this client?')) return;
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`http://localhost:5000/api/clients/${clientId}`, {
+      await axios.delete(`${API_URL}/api/clients/${clientId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchClients();
@@ -121,11 +124,11 @@ const Dashboard = () => {
     const token = localStorage.getItem('token');
     try {
       if (editingProductId) {
-        await axios.put(`http://localhost:5000/api/products/${editingProductId}`, productForm, {
+        await axios.put(`${API_URL}/api/products/${editingProductId}`, productForm, {
           headers: { Authorization: `Bearer ${token}` },
         });
       } else {
-        await axios.post(`http://localhost:5000/api/products/${selectedClient._id}`, productForm, {
+        await axios.post(`${API_URL}/api/products/${selectedClient._id}`, productForm, {
           headers: { Authorization: `Bearer ${token}` },
         });
       }
@@ -146,7 +149,7 @@ const Dashboard = () => {
     if (!window.confirm('Are you sure you want to delete this product?')) return;
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`http://localhost:5000/api/products/${productId}`, {
+      await axios.delete(`${API_URL}/api/products/${productId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchProductsForClient(selectedClient._id);
